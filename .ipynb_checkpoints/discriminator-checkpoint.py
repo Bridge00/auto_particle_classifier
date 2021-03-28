@@ -9,9 +9,10 @@ from util.util import save_image
 from .sepconv import SeparableConv2d, SeparableConvTranspose2d
 
 class Discriminator(nn.Module):
-    def __init__(self, ngpu):
+    def __init__(self):
         super(Discriminator, self).__init__()
-        self.ngpu = ngpu
+        nc = 1
+        ndf = 32
         self.main = nn.Sequential(
             # input is (nc) x 64 x 64
             nn.Conv2d(nc, ndf, 4, 2, 1, bias=False),
@@ -39,10 +40,11 @@ class Discriminator(nn.Module):
 
 
 class SepDiscriminator(nn.Module):
-    def __init__(self, ngpu):
-        super(Discriminator, self).__init__()
-        self.ngpu = ngpu
+    def __init__(self):
+        super(SepDiscriminator, self).__init__()
         self.main = nn.Sequential(
+            nc = 1
+            ndf = 32
             # input is (nc) x 64 x 64
             SeparableConv2d(nc, ndf, 4, 2, 1, bias=False),
             nn.LeakyReLU(0.2, inplace=True),
